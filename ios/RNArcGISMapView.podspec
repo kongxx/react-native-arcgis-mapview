@@ -19,10 +19,10 @@ Pod::Spec.new do |s|
   s.license      = "MIT"
   s.author       = package['author']
   s.platform     = :ios, "11.0"
-  s.source       = { :git => "https://github.com/davidgalindo/react-native-arcgis-mapview.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/kongxx/react-native-arcgis-mapview.git", :tag => "#{s.version}" }
   s.source_files  = "src/*.{h,m,swift}", "src/RNArcGISMapViewManager/*.{h,m,swift}"
   s.swift_version = '4.2'
 
   s.dependency 'React'
-  s.dependency 'ArcGIS-Runtime-SDK-iOS', '100.4'
+  s.dependency 'ArcGIS-Runtime-SDK-iOS', '100.14.1'
 end
