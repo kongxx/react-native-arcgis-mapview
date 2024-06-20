@@ -111,6 +111,22 @@ public class RNArcGISMapViewManager: RCTViewManager {
             print("error: \(error)")
         }
     }
+
+    // ================================================================================
+    @objc func addBaseLayerViaManager(_ args: NSDictionary) {
+        DispatchQueue.main.async {
+            let component = self.agsMapView!
+            component.addBaseLayer(args)
+        }
+    }
+    
+    @objc func removeBaseLayerViaManager(_ arg: NSString) {
+        DispatchQueue.main.async {
+            let component = self.agsMapView!
+            component.removeBaseLayer(arg)
+        }
+    }
+    // ================================================================================
 }
 
 @objc(RNArcGISMapViewModule)

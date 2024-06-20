@@ -39,8 +39,12 @@ RCT_EXTERN_METHOD(routeIsShowing:(nonnull NSNumber*) node callback: (RCTResponse
 RCT_EXTERN_METHOD(setRouteIsVisibleViaManager:(nonnull NSNumber*) node args:(BOOL*) args)
 RCT_EXTERN_METHOD(getRouteIsVisibleViaManager:(nonnull NSNumber*) node args:(BOOL*) args)
 RCT_EXTERN_METHOD(setLicenseKey:(nonnull NSString*)key)
-
 RCT_EXTERN_METHOD(dispose:(nonnull NSNumber*) node)
+
+// ================================================================================
+RCT_EXTERN_METHOD(addBaseLayerViaManager:(NSDictionary*)args)
+RCT_EXTERN_METHOD(removeBaseLayerViaManager:(NSString*) arg)
+// ================================================================================
 @end
 
 @interface RCT_EXTERN_MODULE(RNArcGISMapViewModule, RCTEventEmitter)

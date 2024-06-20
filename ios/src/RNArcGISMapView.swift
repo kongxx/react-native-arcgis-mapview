@@ -16,6 +16,10 @@ public class RNArcGISMapView: AGSMapView, AGSGeoViewTouchDelegate {
     var router: RNAGSRouter?
     var bridge: RCTBridge?
     
+    // ================================================================================
+    var baseLayers: [String: AGSLayer] = [:]
+    // ================================================================================
+
     // MARK: Initializers and helper methods
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -380,4 +384,33 @@ public class RNArcGISMapView: AGSMapView, AGSGeoViewTouchDelegate {
             self.routeGraphicsOverlay.graphics.add(routeGraphic)
         }
     }
+
+    // ================================================================================
+    @objc func addBaseLayer(_ args: NSDictionary) {
+        guard let baseLayerReferenceId = args["referenceId"] as? String,  let basemapUrlString = args["url"] as? String else {
+            print("WARNING: Invalid base layer entered. No layers will be added.")
+            reportToOverlayDidLoadListener(referenceId: args["referenceId"] as? NSString ?? NSString(string:"unknown"), action: "add", success: false, errorMessage: "Invalid base layer entered.")
+            return
+        }
+        
+        if let url = URL(string: basemapUrlString), let layer = createLayer(url: url) {
+            self.baseLayers[baseLayerReferenceId] = layer
+            self.map?.basemap.baseLayers.add(layer)
+            reportToOverlayDidLoadListener(referenceId: NSString(string: baseLayerReferenceId), action: "add", success: true, errorMessage: nil)
+        }
+    }
+    
+    @objc func removeBaseLayer(_ arg: NSString) {
+        if let baseLayerReferenceId = arg as String?, let layer = self.baseLayers[baseLayerReferenceId] {
+            self.baseLayers.removeValue(forKey: baseLayerReferenceId)
+            self.map?.basemap.baseLayers.remove(layer)
+            reportToOverlayDidLoadListener(referenceId: NSString(string: baseLayerReferenceId), action: "remove", success: true, errorMessage: nil)
+        }
+    }
+
+    private func createLayer(url: URL) -> AGSLayer? {
+        var layer: AGSLayer? = AGSArcGISMapImageLayer(url: url)
+        return layer
+    }
+    // ================================================================================
 }

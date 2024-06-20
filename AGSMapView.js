@@ -139,6 +139,16 @@ class ArcGISMapView extends React.Component {
     );
   }
 
+  // ================================================================================
+  addBaseLayer = (args) => {
+    NativeModules.RNArcGISMapViewManager.addBaseLayerViaManager(args);
+  }
+
+  removeBaseLayer = (baseLayerId) => {
+    NativeModules.RNArcGISMapViewManager.removeBaseLayerViaManager(baseLayerId);
+  }
+  // ================================================================================
+
   // MARK: Render
   render () {
     return <AGSMap {...this.props} ref={e => this.agsMapRef = e} />
